@@ -7,7 +7,13 @@ const keysList = [
 ];
 
 class KeyboardView extends StatelessWidget {
-  const KeyboardView({super.key});
+  final List<String> excludedLetters;
+  final Function(String) onPressed;
+  const KeyboardView({
+    super.key,
+    required this.excludedLetters,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +28,11 @@ class KeyboardView extends StatelessWidget {
                     .map(
                       (element) => KeyWidget(
                         letter: element,
-                        excluded: false,
+                        excluded: excludedLetters.contains(element),
                         onPress: (value) {
                           //
                           print(value);
+                          onPressed(value);
                         },
                       ),
                     )

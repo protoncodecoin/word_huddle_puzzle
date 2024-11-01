@@ -11,6 +11,9 @@ class HuddleProvider extends ChangeNotifier {
   List<String> excludedLetters = [];
   List<Wordle> hurdleBoard = [];
   String targetWord = '';
+  int count = 0;
+  int index = 0;
+  final lettersPerRow = 5;
 
   init() {
     totalWords = words.all.where((word) => word.length == 5).toList();
@@ -25,5 +28,17 @@ class HuddleProvider extends ChangeNotifier {
   generateRandomWord() {
     targetWord = totalWords[random.nextInt(totalWords.length)].toUpperCase();
     print(targetWord);
+  }
+
+  inputLetter(String letter) {
+    if (count < lettersPerRow) {
+      rowInputs.add(letter);
+      count++;
+
+      hurdleBoard[index] = Wordle(letter: letter);
+      index++;
+
+      notifyListeners();
+    }
   }
 }

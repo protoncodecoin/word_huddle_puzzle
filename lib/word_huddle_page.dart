@@ -47,7 +47,14 @@ class _WordHuddlePageState extends State<WordHuddlePage> {
                 ),
               ),
             ),
-            const KeyboardView(),
+            Consumer<HuddleProvider>(
+              builder: (context, provider, child) => KeyboardView(
+                excludedLetters: provider.excludedLetters,
+                onPressed: (value) {
+                  provider.inputLetter(value);
+                },
+              ),
+            ),
           ],
         ),
       ),
