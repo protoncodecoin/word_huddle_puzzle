@@ -19,7 +19,7 @@ class HuddleProvider extends ChangeNotifier {
   }
 
   generateBoard() {
-    hurdleBoard = List.generate(30, (index) => Wordle(title: ""));
+    hurdleBoard = List.generate(30, (index) => Wordle(letter: ""));
   }
 
   generateRandomWord() {

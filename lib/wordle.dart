@@ -1,10 +1,10 @@
 class Wordle {
-  String title;
+  String letter;
   bool existsInTarget;
   bool doesNotExistInTarget;
 
   Wordle({
-    required this.title,
+    required this.letter,
     this.existsInTarget = false,
     this.doesNotExistInTarget = false,
   });
