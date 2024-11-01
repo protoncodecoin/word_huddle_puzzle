@@ -55,6 +55,26 @@ class _WordHuddlePageState extends State<WordHuddlePage> {
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Consumer<HuddleProvider>(
+                builder: (context, provider, child) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        provider.deleteLetter();
+                      },
+                      child: const Text("Delete"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

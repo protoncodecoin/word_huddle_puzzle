@@ -41,4 +41,17 @@ class HuddleProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void deleteLetter() {
+    if (rowInputs.isNotEmpty) {
+      rowInputs.removeAt(rowInputs.length - 1);
+
+      if (count > 0) {
+        hurdleBoard[index - 1] = Wordle(letter: "");
+        count--;
+        index--;
+      }
+      notifyListeners();
+    }
+  }
 }
