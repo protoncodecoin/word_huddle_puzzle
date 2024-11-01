@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:word_huddle_puzzle/helper_functions.dart';
 import 'package:word_huddle_puzzle/huddle_provider.dart';
 import 'package:word_huddle_puzzle/keyboard_view.dart';
 import 'package:word_huddle_puzzle/wordle_view.dart';
@@ -68,7 +69,28 @@ class _WordHuddlePageState extends State<WordHuddlePage> {
                       child: const Text("Delete"),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (!provider.isAValidWord) {
+                          showMessage(
+                              context: context, message: "Word not valid");
+                          return;
+                        }
+
+                        if (provider.shouldCheckForAnswer) {
+                          provider.checkAnswer();
+                        }
+
+                        if (provider.wins) {
+                          // show a dialog box
+                          showResult(
+                            context: context,
+                            title: 'You win!!',
+                            body: "The word was ${provider.targetWord}",
+                            onPlayAgain: () {},
+                            onCancel: () {},
+                          );
+                        }
+                      },
                       child: const Text("Submit"),
                     ),
                   ],

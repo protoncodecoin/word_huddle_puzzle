@@ -14,6 +14,7 @@ class HuddleProvider extends ChangeNotifier {
   int count = 0;
   int index = 0;
   final lettersPerRow = 5;
+  bool wins = false;
 
   init() {
     totalWords = words.all.where((word) => word.length == 5).toList();
@@ -29,6 +30,11 @@ class HuddleProvider extends ChangeNotifier {
     targetWord = totalWords[random.nextInt(totalWords.length)].toUpperCase();
     print(targetWord);
   }
+
+  bool get isAValidWord =>
+      totalWords.contains(rowInputs.join("").toLowerCase());
+
+  bool get shouldCheckForAnswer => rowInputs.length == lettersPerRow;
 
   inputLetter(String letter) {
     if (count < lettersPerRow) {
@@ -52,6 +58,13 @@ class HuddleProvider extends ChangeNotifier {
         index--;
       }
       notifyListeners();
+    }
+  }
+
+  void checkAnswer() {
+    final input = rowInputs.join("");
+    if (input == targetWord) {
+      wins = true;
     }
   }
 }
