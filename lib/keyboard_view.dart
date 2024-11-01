@@ -30,8 +30,6 @@ class KeyboardView extends StatelessWidget {
                         letter: element,
                         excluded: excludedLetters.contains(element),
                         onPress: (value) {
-                          //
-                          print(value);
                           onPressed(value);
                         },
                       ),

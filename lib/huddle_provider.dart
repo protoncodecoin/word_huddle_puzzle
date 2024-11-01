@@ -14,6 +14,8 @@ class HuddleProvider extends ChangeNotifier {
   int count = 0;
   int index = 0;
   final lettersPerRow = 5;
+  final totalAttempts = 6;
+  int attempts = 0;
   bool wins = false;
 
   init() {
@@ -35,6 +37,8 @@ class HuddleProvider extends ChangeNotifier {
       totalWords.contains(rowInputs.join("").toLowerCase());
 
   bool get shouldCheckForAnswer => rowInputs.length == lettersPerRow;
+
+  bool get noAttemptsLeft => attempts == totalAttempts;
 
   inputLetter(String letter) {
     if (count < lettersPerRow) {
@@ -65,6 +69,48 @@ class HuddleProvider extends ChangeNotifier {
     final input = rowInputs.join("");
     if (input == targetWord) {
       wins = true;
+    } else {
+      _markLetterOnBoard();
+
+      if (attempts < totalAttempts) {
+        _goToNextRow();
+      }
     }
+  }
+
+  void _markLetterOnBoard() {
+    for (int i = 0; i < hurdleBoard.length; i++) {
+      if (hurdleBoard[i].letter.isNotEmpty &&
+          targetWord.contains(hurdleBoard[i].letter)) {
+        hurdleBoard[i].existsInTarget = true;
+      } else if (hurdleBoard[i].letter.isNotEmpty &&
+          !targetWord.contains(hurdleBoard[i].letter)) {
+        hurdleBoard[i].doesNotExistInTarget = true;
+        excludedLetters.add(hurdleBoard[i].letter);
+      }
+    }
+
+    notifyListeners();
+  }
+
+  void _goToNextRow() {
+    attempts++;
+    count = 0;
+    rowInputs.clear();
+  }
+
+  reset() {
+    count = 0;
+    index = 0;
+    attempts = 0;
+    rowInputs = [];
+    hurdleBoard = [];
+    excludedLetters = [];
+    wins = false;
+    targetWord = "";
+    generateBoard();
+    generateRandomWord();
+
+    notifyListeners();
   }
 }
